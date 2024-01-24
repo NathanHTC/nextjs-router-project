@@ -1,3 +1,8 @@
+//create postgres database
+//create extension for database
+//create tables for user, invoice, customers ,renvenue
+//call bcrypt to hash user password
+//seed the table with user data
 const { db } = require('@vercel/postgres');
 const {
   invoices,
@@ -7,7 +12,7 @@ const {
 } = require('../app/lib/placeholder-data.js');
 const bcrypt = require('bcrypt');
 
-//async func to seed database with user
+//async func to create user table, and insert the userData
 async function seedUsers(client) {
   try {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
