@@ -3,6 +3,8 @@
 //create tables for user, invoice, customers ,renvenue
 //call bcrypt to hash user password
 //seed the table with user data
+require('dotenv').config({ path:'./.env'});
+console.log("POSTGRES_url:", process.env.POSTGRES_URL);
 const { db } = require('@vercel/postgres');
 const {
   invoices,
