@@ -770,6 +770,9 @@ select {
 .mt-40 {
   margin-top: 10rem;
 }
+.ml-5 {
+  margin-left: 1.25rem;
+}
 .block {
   display: block;
 }
@@ -835,6 +838,9 @@ select {
 }
 .h-full {
   height: 100%;
+}
+.h-2 {
+  height: 0.5rem;
 }
 .min-h-screen {
   min-height: 100vh;
@@ -924,6 +930,14 @@ select {
 }
 .rotate-\[15deg\] {
   --tw-rotate: 15deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.rotate-\[10deg\] {
+  --tw-rotate: 10deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.rotate-\[25deg\] {
+  --tw-rotate: 25deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .cursor-pointer {
@@ -1137,6 +1151,9 @@ select {
 .p-6 {
   padding: 1.5rem;
 }
+.p-10 {
+  padding: 2.5rem;
+}
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -1192,6 +1209,14 @@ select {
 .py-\[9px\] {
   padding-top: 9px;
   padding-bottom: 9px;
+}
+.px-10 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+.px-5 {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 .pb-2 {
   padding-bottom: 0.5rem;
@@ -1341,6 +1366,10 @@ select {
 }
 .text-transparent {
   color: transparent;
+}
+.text-rose-500 {
+  --tw-text-opacity: 1;
+  color: rgb(244 63 94 / var(--tw-text-opacity));
 }
 .antialiased {
   -webkit-font-smoothing: antialiased;
@@ -1590,6 +1619,10 @@ input[type='number']::-webkit-outer-spin-button {
     height: 13rem;
   }
 
+  .md\:h-20 {
+    height: 5rem;
+  }
+
   .md\:w-2\/5 {
     width: 40%;
   }
@@ -1616,6 +1649,10 @@ input[type='number']::-webkit-outer-spin-button {
 
   .md\:w-16 {
     width: 4rem;
+  }
+
+  .md\:w-12 {
+    width: 3rem;
   }
 
   .md\:flex-none {
@@ -1676,6 +1713,14 @@ input[type='number']::-webkit-outer-spin-button {
 
   .md\:p-6 {
     padding: 1.5rem;
+  }
+
+  .md\:p-3 {
+    padding: 0.75rem;
+  }
+
+  .md\:p-1 {
+    padding: 0.25rem;
   }
 
   .md\:px-2 {
