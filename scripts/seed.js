@@ -178,6 +178,15 @@ async function main() {
 
   await client.end();
 }
+ 
+async function man(){
+  const client = await db.connect();
+
+  await seedUsers(client);
+  await seedCustomers(client);
+  await seedInvoices(client);
+  await seedRevenue(client);
+}
 
 main().catch((err) => {
   console.error(
