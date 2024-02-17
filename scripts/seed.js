@@ -4,7 +4,7 @@
 //call bcrypt to hash user password
 //seed the table with user data.
 require('dotenv').config({ path:'../.env'});
-console.log("POSTGRES_url:", process.env.POSTGRES_URL);
+// console.log("POSTGRES_url:", process.env.POSTGRES_URL);
 const { db } = require('@vercel/postgres');
 const {
   invoices,
@@ -179,14 +179,7 @@ async function main() {
   await client.end();
 }
  
-async function man(){
-  const client = await db.connect();
 
-  await seedUsers(client);
-  await seedCustomers(client);
-  await seedInvoices(client);
-  await seedRevenue(client);
-}
 
 main().catch((err) => {
   console.error(
