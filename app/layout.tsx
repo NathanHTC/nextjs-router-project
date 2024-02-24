@@ -2,7 +2,7 @@
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
 //root layout needs to have html and body tag
-
+//check git reverse
 export default function RootLayout({
   children,
 }: {
