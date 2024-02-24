@@ -23,6 +23,7 @@ export default function Page() {
             </a>
             , brought to you by Vercel.
           </p>
+
           <Link 
             href="/dashboard" 
             className="flex bg-blue-400 rounded-lg text-white text-lg p-2 
@@ -40,7 +41,7 @@ export default function Page() {
           </Link>
         </div>
 
-        <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
+        <div className="flex items-center justify-center p-6 md:w-4/6 md:px-28 md:py-12 bg-gray-300">
           {/* Add Hero Images Here */}
           <Image 
             src='/hero-desktop.png'
