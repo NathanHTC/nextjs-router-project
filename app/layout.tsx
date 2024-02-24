@@ -1,3 +1,4 @@
+//import global.css to this top level component
 import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
 
