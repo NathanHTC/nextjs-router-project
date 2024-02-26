@@ -9,7 +9,7 @@ import Image from 'next/image'
 export default function Page() {
   return (
     <main className="flex min-h-screen flex-col p-6">
-      <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52">
+      <div className="flex h-20 shrink-0 items-end rounded-lg bg-blue-500 p-4 md:h-52 shadow-lg">
         <AcmeLogo />
       </div>
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
@@ -41,7 +41,7 @@ export default function Page() {
           </Link>
         </div>
 
-        <div className="flex items-center justify-center p-6 md:w-4/6 md:px-28 md:py-12 bg-gray-300">
+        <div className="flex items-center justify-center p-6 md:w-4/6 md:px-28 md:py-12 bg-gray-300 rounded-lg shadow-lg">
           {/* Add Hero Images Here */}
           <Image 
             src='/hero-desktop.png'
