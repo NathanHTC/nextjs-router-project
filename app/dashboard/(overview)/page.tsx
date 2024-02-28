@@ -1,4 +1,3 @@
-import { Card } from '@/app/ui/dashboard/cards';
 import RevenueChart from '@/app/ui/dashboard/revenue-chart';
 import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 import { lusitana } from '@/app/ui/fonts';
@@ -6,12 +5,10 @@ import { Suspense } from 'react';
 import { 
   RevenueChartSkeleton, 
   InvoiceSkeleton,
-  CardSkeleton,
-  CardsSkeleton
+  CardsSkeleton,
 } from '@/app/ui/skeletons';
 import CardWrapper from '@/app/ui/dashboard/cards';
 
- 
 export default async function Page() {
   // const revenue = await fetchRevenue();
   
@@ -32,20 +29,15 @@ export default async function Page() {
         <Suspense fallback={<CardsSkeleton/>}>
           <CardWrapper />
         </Suspense>
-        
       </div>
-      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8 bg-red-300 rounded-md border-4 border-black p-6">
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8 rounded-md p-6">
         <Suspense fallback={<RevenueChartSkeleton />}>
           <RevenueChart />
         </Suspense>
 
-
         <Suspense fallback={<InvoiceSkeleton/>}>
           <LatestInvoices />
         </Suspense>
-
-        
-        
       </div>
     </main>
   );
