@@ -6,7 +6,16 @@ import { lusitana } from '@/app/ui/fonts';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 
-export default function Page(){
+export default function Page({
+    searchParams,
+}:{
+    searchParams?: {
+        query?: string;
+        page? : String;
+    };
+}){
+    const query = searchParams?.query || '';
+    const currentPage = Number(searchParams?.page) || 1;
     return (
         <div className='w-full'>
             <div className='w-full flex items-center justify-between'>
@@ -16,8 +25,11 @@ export default function Page(){
                 <Search placeholder="Search invoices..."/>
                 <CreateInvoice />
             </div>
-            <div>
-
+                <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+                    <Table query={query} currentPage={currentPage} />
+                </Suspense> 
+            <div className="mt-5 flex w-full justify-center">
+                {/* <Pagination totalPages={totalPages} /> */}
             </div>
         </div>
     )
