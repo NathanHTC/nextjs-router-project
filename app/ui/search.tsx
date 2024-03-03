@@ -1,6 +1,7 @@
 'use client';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useSearchParams, usePathname, useRouter } from "@/node_modules/next/navigation";
+import { useDebouncedCallback } from 'use-debounce'; 
 
 export default function Search({ placeholder }: { placeholder: string }) {
   //turn searchParams into a key value pair object
@@ -8,19 +9,22 @@ export default function Search({ placeholder }: { placeholder: string }) {
   //access current path: /dashboard/invoices
   const pathname = usePathname();
   const { replace } = useRouter();
-  function handleSearch(term:string){
-    //use utilty functions of URLSearchParams
-    const params = new URLSearchParams(searchParams);
-    if(term){
-      params.set('query', term);
-    }
-    else {
-      params.delete('query');
-    }
-    //update url without navigating away from cur page
-    replace(`${pathname}?${params.toString()}`)
-    
-  }
+  //handleSearch only run the code after user stop typing for 300ms 
+  const handleSearch = useDebouncedCallback((term:string) => {
+     //use utilty functions of URLSearchParams
+     const params = new URLSearchParams(searchParams);
+     params.set('page', '1')
+     if(term){
+       params.set('query', term);
+     }
+     else {
+       params.delete('query');
+     }
+     console.log(`${placeholder}${term}`);
+     //update url without navigating away from cur page
+     replace(`${pathname}?${params.toString()}`)
+  }, 300);
+   
   return (
     <div className="relative flex flex-1 flex-shrink-0">
       <label htmlFor="search" className="sr-only">
