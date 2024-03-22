@@ -24,10 +24,13 @@ export default async function Page({
                 <h1 className={`${lusitana.className} text-2xl`}>Invoices</h1>
             </div>
             <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
+                {/* search will take input and updates the url
+                then, searchParams will be catched by this page */}
                 <Search placeholder="Search invoices..."/>
                 <CreateInvoice />
             </div>
                 <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
+                    {/* page set to 1 and called at every input changes */}
                     <Table query={query} currentPage={currentPage} />
                 </Suspense> 
             <div className="mt-5 flex w-full justify-center">
