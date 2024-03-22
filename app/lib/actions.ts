@@ -26,7 +26,11 @@ export async function createInvoice(formData: FormData){
         amount: formData.get('amount'),
         status: formData.get('status'),
     });
-
+    //store monetary values in cents in database
+    //to eliminate JS floating point errors
+    const amountInCents = amount * 100;
+    //invoice creation date
+    const date = new Date().toISOString().split('T')[0];
     
 
    console.log(typeof(amount))
