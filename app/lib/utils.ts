@@ -1,6 +1,7 @@
 import { Revenue } from './definitions';
 
 export const formatCurrency = (amount: number) => {
+  //amount is stored in cents thats why /100
   return (amount / 100).toLocaleString('en-US', {
     style: 'currency',
     currency: 'USD',
