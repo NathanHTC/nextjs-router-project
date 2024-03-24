@@ -137,14 +137,14 @@ export async function updateInvoice(
         SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
         WHERE id = ${id}
         `
-        //purge client cache and redirect
-        revalidatePath('/dashboard/invoices');
+        
     } catch(error){
         return {
             message: 'Database error, Failed to update invoice'
         }
     }
-    
+    //purge client cache and redirect
+    revalidatePath('/dashboard/invoices');
     //redirect works by throwing an error, which would be caught by catch
     redirect('/dashboard/invoices');
 }
