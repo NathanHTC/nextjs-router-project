@@ -35,8 +35,8 @@ export async function createInvoice(formData: FormData){
     //invoice creation date
     const date = new Date().toISOString().split('T')[0];
     
-
-   await sql`
+   try{
+    await sql`
    INSERT INTO invoices (customer_id, amount, status, date)
    VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
    `;
@@ -44,6 +44,12 @@ export async function createInvoice(formData: FormData){
    revalidatePath('/dashboard/invoices');
    //redirect user back to invoice page
    redirect('/dashboard/invoices');
+   } catch(error) {
+    return {
+        message: 'Database Error: Failed to Create Invoice.',
+    };
+   } 
+   
 }
 
 const UpdateInvoice = FormSchema.omit({ id:true, date:true })
@@ -57,17 +63,33 @@ export async function updateInvoice(id:string, formData: FormData){
 
     const amountInCents = amount * 100;
 
-    await sql`
-    UPDATE invoices
-    SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
-    WHERE id = ${id}
-    `
-    //purge client cache and redirect
-    revalidatePath('/dashboard/invoices');
+    try{
+        await sql`
+        UPDATE invoices
+        SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
+        WHERE id = ${id}
+        `
+        //purge client cache and redirect
+        revalidatePath('/dashboard/invoices');
+    } catch(error){
+        return {
+            message: 'Database error, Failed to update invoice'
+        }
+    }
+    
+    //redirect works by throwing an error, which would be caught by catch
     redirect('/dashboard/invoices');
 }
 
 export async function deleteInvoice(id: string){
-    await sql`DELETE FROM invoices WHERE id = ${id}`;
-    revalidatePath('/dashboard/invoice');
+    throw new Error('Failed to Delete Invoice');
+    try{
+        await sql`DELETE FROM invoices WHERE id = ${id}`;
+        revalidatePath('/dashboard/invoice');
+    } catch(error){
+        return {
+            message: 'Database error: Failed to delete invoice.'
+        }
+    }
+    
 }
