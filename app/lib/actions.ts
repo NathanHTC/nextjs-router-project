@@ -33,8 +33,10 @@ export type State = {
     };
     message?: string | null;
 };
+//by using useFormState, we are validating and update the state of form
 export async function createInvoice(prevState: State, formData: FormData){
     //validate form fields using Zod
+    //safeParse prevent zod throw error when validation fails
     const validatedFields = CreateInvoice.safeParse({
         customerId: formData.get('customerId'),
         amount: formData.get('amount'),
@@ -51,6 +53,7 @@ export async function createInvoice(prevState: State, formData: FormData){
         };
     }
 
+    //if we are here, form data is validated
     const { customerId, amount, status } = validatedFields.data;
     const amountInCents = amount * 100;
     //invoice creation date
