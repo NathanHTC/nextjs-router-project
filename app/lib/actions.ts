@@ -12,45 +12,97 @@ import { redirect } from '@/node_modules/next/navigation';
 
 const FormSchema = z.object({
     id:z.string(),
-    customerId: z.string(),
-    amount: z.coerce.number(),
-    status: z.enum(['pending', 'paid']),
+    customerId: z.string({
+        invalid_type_error: 'Please select a customer.'
+    }),
+    amount: z.coerce
+        .number()
+        .gt(0, { message: 'Please enter an amount greater than $0.'}),
+    status: z.enum(['pending', 'paid'], {
+        invalid_type_error: 'Please select an invoice status.',
+    }),
     date: z.string(),
 });
 
 const CreateInvoice = FormSchema.omit({ id:true, date:true });
-
-export async function createInvoice(formData: FormData){
-    //formData is a specific type of form obejct, but we want to 
-    //turn it into a plain js object that could use . to access value
-    // console.log("createInvoice action function called")
-    const { customerId, amount, status } = CreateInvoice.parse({
+export type State = {
+    errors?: {
+        customerId?: string[];
+        amount?: string[];
+        status?: string[];
+    };
+    message?: string | null;
+};
+export async function createInvoice(prevState: State, formData: FormData){
+    //validate form fields using Zod
+    const validatedFields = CreateInvoice.safeParse({
         customerId: formData.get('customerId'),
         amount: formData.get('amount'),
         status: formData.get('status'),
     });
-    //store monetary values in cents in database
-    //to eliminate JS floating point errors
+
+    console.log(validatedFields)
+
+    //if form validation fails, return errors early, otherwise, continue
+    if(!validatedFields.success){
+        return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: 'Missing Fields. Failed to Create Invoice.',
+        };
+    }
+
+    const { customerId, amount, status } = validatedFields.data;
     const amountInCents = amount * 100;
     //invoice creation date
     const date = new Date().toISOString().split('T')[0];
-    
-   try{
-    await sql`
-   INSERT INTO invoices (customer_id, amount, status, date)
-   VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
-   `;
-   //purge the cache since it became outdated, trigger a new request to the server
-   revalidatePath('/dashboard/invoices');
-   //redirect user back to invoice page
-   redirect('/dashboard/invoices');
-   } catch(error) {
-    return {
-        message: 'Database Error: Failed to Create Invoice.',
-    };
-   } 
-   
+    try{
+        await sql`
+       INSERT INTO invoices (customer_id, amount, status, date)
+       VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
+       `;
+       
+       } catch(error) {
+        return {
+            message: 'Database Error: Failed to Create Invoice.',
+        };
+       } 
+       //purge the cache since it became outdated, trigger a new request to the server
+       revalidatePath('/dashboard/invoices');
+       //redirect user back to invoice page
+       redirect('/dashboard/invoices');
 }
+// export async function createInvoice2(formData: FormData){
+//     //formData is a specific type of form obejct, but we want to 
+//     //turn it into a plain js object that could use . to access value
+//     // console.log("createInvoice action function called")
+//     const { customerId, amount, status } = CreateInvoice.parse({
+//         customerId: formData.get('customerId'),
+//         amount: formData.get('amount'),
+//         status: formData.get('status'),
+//     });
+//     //store monetary values in cents in database
+//     //to eliminate JS floating point errors
+//     const amountInCents = amount * 100;
+//     //invoice creation date
+//     const date = new Date().toISOString().split('T')[0];
+    
+//    try{
+//     await sql`
+//    INSERT INTO invoices (customer_id, amount, status, date)
+//    VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
+//    `;
+   
+//    } catch(error) {
+//     return {
+//         message: 'Database Error: Failed to Create Invoice.',
+//     };
+//    } 
+//    //purge the cache since it became outdated, trigger a new request to the server
+//    revalidatePath('/dashboard/invoices');
+//    //redirect user back to invoice page
+//    redirect('/dashboard/invoices');
+   
+// }
 
 const UpdateInvoice = FormSchema.omit({ id:true, date:true })
 
