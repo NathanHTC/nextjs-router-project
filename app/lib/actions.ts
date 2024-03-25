@@ -6,7 +6,7 @@
 'use server'
 //zod is a typescript-first validation lib
 import { z } from 'zod';
-// import { sql } from '@vercel/postgres';
+import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from '@/node_modules/next/navigation';
 import { signIn } from '@/auth';
